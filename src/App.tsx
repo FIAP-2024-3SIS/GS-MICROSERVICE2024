@@ -1,6 +1,28 @@
 import { useEffect } from "react";
 import { DataTable, FiltersContainner, Header, SelectFilters } from "./styles";
 
+interface apiReturn {
+  nivelPoluicao: string,
+  regiao: string,
+  ph: number,
+  temperaturaAgua: number,
+  especies: especiesData[],
+  projetosConservacao: projetosData[],
+}
+
+interface especiesData {
+  nome: string,
+  especie: string,
+}
+
+interface projetosData {
+  nomeProjeto: string,
+  tipoParticipacao: string,
+  tipoProjeto: string,
+}
+
+type apiData = apiReturn[]
+
 function App() {
   useEffect(() => {
     getData();
@@ -9,7 +31,7 @@ function App() {
   async function getData() {
     fetch(`https://fiap-3sis-gs-20241.azurewebsites.net/OceanData?pagina=1&qtde=20`)
       .then((response) => response.json())
-      .then((data) => {
+      .then((data : apiData) => {
         const apiData = data;
         console.log(apiData);
       });
