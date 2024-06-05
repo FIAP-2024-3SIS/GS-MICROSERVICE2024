@@ -7,10 +7,10 @@ function App() {
   }, []);
 
   async function getData() {
-    fetch(`https://fiap-3sis-gs-20241.azurewebsites.net`)
+    fetch(`https://fiap-3sis-gs-20241.azurewebsites.net/OceanData?pagina=1&qtde=20`)
       .then((response) => response.json())
       .then((data) => {
-        const apiData = data.data;
+        const apiData = data;
         console.log(apiData);
       });
   }
