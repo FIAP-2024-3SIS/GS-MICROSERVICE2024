@@ -9,10 +9,16 @@ export const Header = styled.header`
     justify-content: space-around;
     align-items: center;
 
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
+    a {
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        transition: 0.7s;
+    }
+    a:hover {
+        transform: scale(1.3);
+    }
 `
 
 export const FiltersContainner = styled.div`
