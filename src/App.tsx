@@ -1,40 +1,37 @@
-import { useEffect } from "react";
-import { DataTable, FiltersContainner, Header, SelectFilters } from "./styles";
-
-interface apiReturn {
-  nivelPoluicao: string,
-  regiao: string,
-  ph: number,
-  temperaturaAgua: number,
-  especies: especiesData[],
-  projetosConservacao: projetosData[],
-}
-
-interface especiesData {
-  nome: string,
-  especie: string,
-}
-
-interface projetosData {
-  nomeProjeto: string,
-  tipoParticipacao: string,
-  tipoProjeto: string,
-}
-
-type apiData = apiReturn[]
+import { useEffect, useState } from "react";
+import { Buttons, ButtonsDiv, DataTable, FiltersContainner, Header, SelectFilters, TData, TableBody } from "./styles";
 
 function App() {
+
+  const [data, setData] = useState<[]>([])
+  const [page, setPage] = useState(1)
+
   useEffect(() => {
     getData();
   }, []);
 
   async function getData() {
-    fetch(`https://fiap-3sis-gs-20241.azurewebsites.net/OceanData?pagina=1&qtde=20`)
+    fetch(`https://fiap-3sis-gs-20241.azurewebsites.net/OceanData?pagina=${page}&qtde=20`)
       .then((response) => response.json())
-      .then((data : apiData) => {
+      .then((data) => {
         const apiData = data;
+        setData(data)
         console.log(apiData);
       });
+  }
+
+  function nextPage(){
+    setPage(page+1)
+    console.log(page)
+  }
+
+  function lastPage(){
+    if (page < 1){
+      return
+    }
+
+    setPage(page-1)
+    console.log(page)
   }
 
   return (
@@ -61,28 +58,35 @@ function App() {
         </div>
       </FiltersContainner>
       <DataTable>
-        <table>
           <thead>
             <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>Região</th>
+              <th>pH</th>
+              <th>Temperatura da Água</th>
+              <th>Poluição</th>
+              <th>Nome Especies</th>
+              <th>Status Especies</th>
             </tr>
           </thead>
-          {/* {data.length > 0 && data.map( (item) => (
-            <tbody>
+          {data.length > 0 && data.map( (item : any) => (
+
+
+            <TableBody>
               <tr>
-                <td>{item.}</td>
-                <td>{item.}</td>
-                <td>{item.}</td>
-                <td>{item.}</td>
+                <TData>{item.regiao}</TData>
+                <TData>{item.pH}</TData>
+                <TData>{item.temperaturaAgua}</TData>
+                <TData>{item.nivelPoluicao}</TData>
+                <TData>{item.especies.map((x : any) => x.nome + " | ")}</TData>
+                <TData>{item.especies.map((x : any) => x.status + " | ")}</TData> 
               </tr>
-            </tbody>
-          ))     
-          } */}
-        </table>
+            </TableBody>
+          ))}
       </DataTable>
+      <ButtonsDiv>
+        <Buttons onClick={lastPage}>Voltar página</Buttons>
+        <Buttons onClick={nextPage}>próxima página</Buttons>
+      </ButtonsDiv>
     </>
   );
 }

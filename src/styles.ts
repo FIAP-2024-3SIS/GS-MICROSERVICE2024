@@ -47,6 +47,40 @@ export const SelectFilters = styled.div`
  gap: 5px;
 `
 
-export const DataTable = styled.div`
+export const DataTable = styled.table`
+    border: 1px solid black;
+    width: 100%;
+`
+
+
+
+export const TableBody = styled.tbody `
+    display: table-row-group;
+    width: 100%;
+` 
+
+export const TData = styled.td `
+    text-align: center;
+`
+
+export const ButtonsDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+
+    /* gap: 15px; */
+
     
+`
+
+export const Buttons = styled.button`
+    padding: 10px;
+    border-radius: 1px;
+    margin:20px;
+    border: 0;
+
+
+    background-color: #22d3ee; 
+    color: white;
 `
